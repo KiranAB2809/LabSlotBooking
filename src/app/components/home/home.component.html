@@ -1,0 +1,72 @@
+<mat-toolbar style="background-color: #404040; color: #F3F3F3;">
+    <span>IGT LAB Appointment</span>
+</mat-toolbar>
+
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Book Lab
+        </mat-panel-title>
+        <mat-panel-description>
+            This is a to book lab
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-card>
+        <h3>
+            Book Lab Slots
+        </h3>
+        <br>
+        <div style="padding: 1px 1px 10px 5px;">
+            <mat-label>Name</mat-label>
+            <input matInput style="margin-left: 1em;" id="userName" type="text" [(ngModel)]="userName">
+        </div>
+        <div style="padding: 1px 1px 10px 5px;">
+            <mat-label>User ID</mat-label>
+            <input matInput style="margin-left: 1em;" id="userId" type="text" [(ngModel)]="userId">
+        </div>
+        <div style="padding: 1px 1px 10px 5px;">
+            <mat-label>Select Lab</mat-label>
+            <select style="width: 200px; margin-left: 1em;" [(ngModel)]="selectedLab" class="my-select-panel">
+                <option *ngFor="let lab of labs" [value]="lab.id">
+                    {{lab.value}}
+                </option>
+            </select>
+        </div>
+        <div style="padding: 1px 1px 10px 5px;">
+            <mat-label>Start Time</mat-label>
+            <input type="datetime-local" style="margin-left: 1em;" [(ngModel)]="startTime">
+        </div>
+        <div style="padding: 1px 1px 10px 5px;">
+            <mat-label>End Time</mat-label>
+            <input type="datetime-local" style="margin-left: 1em;" [(ngModel)]="endTime">
+        </div>
+        <button mat-raised-button color="primary" (click)="BookSlot()" >Book Slot</button>
+    </mat-card>
+</mat-expansion-panel>
+<mat-expansion-panel >
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Check for Lab Availablity
+        </mat-panel-title>
+        <mat-panel-description>
+            This is to check if Lab is free
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div style="padding: 1px 1px 10px 5px;">
+        <mat-label>Select Lab</mat-label>
+        <select style="width: 200px; margin-left: 1em;" [(ngModel)]="checkLab" class="my-select-panel">
+            <option *ngFor="let lab of labs" [value]="lab.value">
+                {{lab.value}}
+            </option>
+        </select>
+    </div>
+    <div style="padding: 1px 1px 10px 5px;">
+        <mat-label>Start Time</mat-label>
+        <input type="datetime-local" style="margin-left: 1em;" [(ngModel)]="checkstartTime">
+    </div>
+    <div style="padding: 1px 1px 10px 5px;">
+        <mat-label>End Time</mat-label>
+        <input type="datetime-local" style="margin-left: 1em;" [(ngModel)]="checkendTime">
+    </div>
+    <button mat-raised-button color="primary" (click)="CheckSlot()">Check Available Slot</button>
+</mat-expansion-panel>
