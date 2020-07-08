@@ -6,8 +6,9 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatSelectModule, MatFormFieldModule, MatToolbarModule,MatInputModule, MatFormFieldControl, MatCardModule, MatExpansionModule } from '@angular/material';
+import { MatButtonModule, MatSelectModule, MatFormFieldModule, MatToolbarModule,MatInputModule, MatFormFieldControl, MatCardModule, MatExpansionModule, MatGridListModule, MatTableModule, MatSnackBarModule } from '@angular/material';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { HttpClientModule } from '@angular/common/http';
 // import { MaterialModule } from './material-module';
 // import { MatToolbarModule } from '@angular/material/toolbar';
 // import { MatFormFieldModule } from '@angular/material/form-field';
@@ -30,7 +31,11 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     MatButtonModule,
     MatSelectModule,
     MatCardModule,
-    FormsModule  
+    FormsModule,
+    HttpClientModule,
+    MatGridListModule,
+    MatTableModule,
+    MatSnackBarModule 
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }, 

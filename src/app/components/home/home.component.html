@@ -5,68 +5,113 @@
 <mat-expansion-panel>
     <mat-expansion-panel-header>
         <mat-panel-title>
-            Book Lab
+            <h3>
+                Book Lab Slots
+            </h3>
         </mat-panel-title>
-        <mat-panel-description>
-            This is a to book lab
-        </mat-panel-description>
     </mat-expansion-panel-header>
-    <mat-card>
-        <h3>
-            Book Lab Slots
-        </h3>
-        <br>
-        <div style="padding: 1px 1px 10px 5px;">
-            <mat-label>Name</mat-label>
-            <input matInput style="margin-left: 1em;" id="userName" type="text" [(ngModel)]="userName">
-        </div>
-        <div style="padding: 1px 1px 10px 5px;">
-            <mat-label>User ID</mat-label>
-            <input matInput style="margin-left: 1em;" id="userId" type="text" [(ngModel)]="userId">
-        </div>
-        <div style="padding: 1px 1px 10px 5px;">
-            <mat-label>Select Lab</mat-label>
-            <select style="width: 200px; margin-left: 1em;" [(ngModel)]="selectedLab" class="my-select-panel">
-                <option *ngFor="let lab of labs" [value]="lab.id">
-                    {{lab.value}}
-                </option>
-            </select>
-        </div>
-        <div style="padding: 1px 1px 10px 5px;">
-            <mat-label>Start Time</mat-label>
-            <input type="datetime-local" style="margin-left: 1em;" [(ngModel)]="startTime">
-        </div>
-        <div style="padding: 1px 1px 10px 5px;">
-            <mat-label>End Time</mat-label>
-            <input type="datetime-local" style="margin-left: 1em;" [(ngModel)]="endTime">
-        </div>
-        <button mat-raised-button color="primary" (click)="BookSlot()" >Book Slot</button>
-    </mat-card>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <mat-label>Name</mat-label>
+                </td>
+                <td>
+                    <input [disabled]="!bookHidden" matInput style="margin-left: 1em;" id="userName" type="text"
+                        [(ngModel)]="userName">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-label>User ID</mat-label>
+                </td>
+                <td>
+                    <input [disabled]="!bookHidden" matInput style="margin-left: 1em;" id="userId" type="text"
+                        [(ngModel)]="userId">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-label>Email ID</mat-label>
+                </td>
+                <td>
+                    <input [disabled]="!bookHidden" matInput style="margin-left: 1em;" id="emailId" type="text"
+                        [(ngModel)]="emailId">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-label>Select Lab</mat-label>
+                </td>
+                <td>
+                    <select [disabled]="!bookHidden" style="width: 200px; margin-left: 1em;" [(ngModel)]="selectedLab"
+                        class="my-select-panel">
+                        <option *ngFor="let lab of labs" [value]="lab.labId">
+                            {{lab.labName}}
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-label>Start Time</mat-label>
+                </td>
+                <td>
+                    <input [disabled]="!bookHidden" type="datetime-local" style="margin-left: 1em;"
+                        [(ngModel)]="startTime">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-label>End Time</mat-label>
+                </td>
+                <td>
+                    <input [disabled]="!bookHidden" type="datetime-local" style="margin-left: 1em;"
+                        [(ngModel)]="endTime">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button *ngIf="bookHidden" [disabled]="!bookHidden" mat-raised-button color="primary" style="margin-right: 0.5em;"
+        (click)="CheckSlot()">Check Available Slot</button>
+    <button *ngIf="!bookHidden" [disabled]="bookHidden" mat-raised-button color="primary" style="margin-right: 0.5em;"
+        (click)="BookSlot()">Book Slot</button>
+    <button mat-raised-button style="margin-right: 0.5em;" (click)="resetData()">Reset</button>
+
 </mat-expansion-panel>
+<div *ngIf="isAdmin" >
 <mat-expansion-panel >
     <mat-expansion-panel-header>
         <mat-panel-title>
-            Check for Lab Availablity
+            <h3>
+                Admin Approval
+            </h3>
         </mat-panel-title>
-        <mat-panel-description>
-            This is to check if Lab is free
-        </mat-panel-description>
     </mat-expansion-panel-header>
-    <div style="padding: 1px 1px 10px 5px;">
-        <mat-label>Select Lab</mat-label>
-        <select style="width: 200px; margin-left: 1em;" [(ngModel)]="checkLab" class="my-select-panel">
-            <option *ngFor="let lab of labs" [value]="lab.value">
-                {{lab.value}}
-            </option>
-        </select>
+    <div>
+        <table id="adminAction" class="mat-elevation-z8">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Lab Name</th>
+                    <th>Time Slot</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of approvalSlot">
+                    <td>{{item.userName}}</td>
+                    <td>{{item.labName}}</td>
+                    <td>{{item.startTime}} - {{item.endTime}}</td>
+                    <td>
+                        <button mat-raised-button id=item.bookingId style="margin-right: 0.5em;" color="primary"
+                            (click)="approve(true, item.bookingId)">Approve</button>
+                        <button mat-raised-button id=item.bookingId style="margin-right: 0.5em;" color="warn"
+                            (click)="approve(false, item.bookingId)">Cancel</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <div style="padding: 1px 1px 10px 5px;">
-        <mat-label>Start Time</mat-label>
-        <input type="datetime-local" style="margin-left: 1em;" [(ngModel)]="checkstartTime">
-    </div>
-    <div style="padding: 1px 1px 10px 5px;">
-        <mat-label>End Time</mat-label>
-        <input type="datetime-local" style="margin-left: 1em;" [(ngModel)]="checkendTime">
-    </div>
-    <button mat-raised-button color="primary" (click)="CheckSlot()">Check Available Slot</button>
 </mat-expansion-panel>
+</div>
